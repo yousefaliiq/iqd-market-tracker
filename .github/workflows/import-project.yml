@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'bootstrap/project.zip'
+      - 'bootstrap/*.zip'
 permissions:
   contents: write
 jobs:
@@ -13,9 +13,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Extract project
         run: |
+          archive=$(find bootstrap -maxdepth 1 -type f -name '*.zip' | head -n 1)
+          test -n "$archive"
           rm -rf /tmp/project
           mkdir -p /tmp/project
-          unzip -q bootstrap/project.zip -d /tmp/project
+          unzip -q "$archive" -d /tmp/project
           top=$(find /tmp/project -mindepth 1 -maxdepth 1 -type d | head -n 1)
           test -n "$top"
           rsync -a --delete --exclude='.git' "$top"/ ./
