@@ -1,0 +1,279 @@
+import { useEffect, useState } from "react";
+import { useMarketData, useRefreshMarketData } from "@/hooks/use-dinar";
+import { StatCard } from "@/components/StatCard";
+import { PriceChart } from "@/components/PriceChart";
+import { CurrencyConverter } from "@/components/CurrencyConverter";
+import { RefreshCw, Info, TrendingUp, TrendingDown, DollarSign, Menu, Globe, HelpCircle, BookOpen, ShieldCheck, X } from "lucide-react";
+import { Link } from "wouter";
+import { clsx } from "clsx";
+import { MobileNavOverlay } from "@/components/MobileNavOverlay";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { translations } from "@/lib/translations";
+
+export default function Home() {
+  const [rateType, setRateType] = useState<'market' | 'official'>('market');
+  const { data, isLoading, isError, refetch, isRefetching } = useMarketData(rateType);
+  const [lang, setLang] = useState<"ar" | "en">(() => {
+    return (localStorage.getItem("language") as "ar" | "en") || "ar";
+  });
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const t = translations[lang];
+
+  useEffect(() => {
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    document.documentElement.lang = lang;
+    localStorage.setItem("language", lang);
+  }, [lang]);
+
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
+        <div className="bg-red-500/10 p-4 rounded-full mb-4">
+          <Info className="w-12 h-12 text-red-400" />
+        </div>
+        <h2 className="text-2xl font-bold text-white mb-2">{t.errorLoading}</h2>
+        <p className="text-slate-400 mb-6">{t.errorSub}</p>
+        <button 
+          onClick={() => refetch()}
+          className="px-6 py-3 rounded-xl bg-primary hover:bg-primary/90 text-slate-900 font-bold transition-colors"
+        >
+          {t.retry}
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[hsl(var(--background))] pb-20 relative overflow-x-hidden">
+      {/* Decorative Background Elements */}
+      <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+
+      {/* Header */}
+      <header className="sticky top-0 z-50 glass-card border-b border-white/5 bg-slate-900/80 backdrop-blur-md transform-gpu">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="relative z-[100] p-2 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 transition-all active:scale-95 hover-elevate active-elevate-2 overflow-visible"
+              >
+                <div className="relative w-6 h-6">
+                  <span className={clsx(
+                    "absolute block h-0.5 w-6 bg-current transition-all duration-300",
+                    isMenuOpen ? "top-3 rotate-45" : "top-1"
+                  )} />
+                  <span className={clsx(
+                    "absolute block h-0.5 w-6 bg-current transition-all duration-300 top-3",
+                    isMenuOpen && "opacity-0 translate-x-4"
+                  )} />
+                  <span className={clsx(
+                    "absolute block h-0.5 w-6 bg-current transition-all duration-300",
+                    isMenuOpen ? "top-3 -rotate-45" : "top-5"
+                  )} />
+                </div>
+              </button>
+
+              <h1 className="text-xl md:text-2xl font-bold text-white tracking-tight text-glow">
+                {t.title}
+                {rateType === 'official' && (
+                  <span className="ml-2 text-sm font-normal text-white/40">({lang === 'ar' ? 'سعر البنك' : 'Official Rate'})</span>
+                )}
+              </h1>
+            </div>
+
+            <div className="flex flex-col items-end opacity-60">
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <MobileNavOverlay 
+        isOpen={isMenuOpen} 
+        onClose={() => setIsMenuOpen(false)}
+        lang={lang}
+        setLang={setLang}
+        rateType={rateType}
+        setRateType={setRateType}
+      />
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10 will-change-transform">
+        
+        {/* Main Price Display */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          {/* Professional Exchange Rate Card */}
+          <div className="lg:col-span-2 relative overflow-hidden rounded-3xl bg-slate-900/40 border border-white/5 p-8 md:p-12 flex flex-col min-h-[300px] group hover:border-white/10 transition-all duration-500 shadow-2xl hover-elevate transform-gpu">
+            {/* Background Decorative Gradient */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none group-hover:bg-primary/10 transition-colors duration-700 will-change-[background-color]" />
+            
+            {isLoading ? (
+              <div className="flex flex-col gap-8 h-full justify-center">
+                <div className="h-4 w-32 bg-white/5 rounded-full animate-pulse" />
+                <div className="h-16 w-64 bg-white/5 rounded-lg animate-pulse" />
+              </div>
+            ) : (
+              <div className="flex flex-col h-full relative z-10">
+                {/* Top Row: Label and Trend */}
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-white/5 border border-white/10">
+                      <DollarSign className="w-4 h-4 text-white/30" />
+                    </div>
+                    <span className="text-white/30 font-semibold text-xs uppercase tracking-widest">
+                      {lang === 'ar' ? 'سعر الصرف المباشر' : 'Live Exchange Rate'}
+                    </span>
+                  </div>
+                  
+                  {/* Trend Indicator with Stunning Popover */}
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button 
+                        type="button"
+                        className={clsx(
+                          "flex items-center gap-2 font-bold text-sm px-5 py-2 rounded-full border transition-all duration-500 cursor-pointer hover:scale-105 active:scale-95 transform-gpu",
+                          rateType === 'official' ? "bg-white/5 text-white/60 border-white/10 hover:bg-white/10" :
+                          data?.trend === "up" ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:bg-emerald-500/20" : 
+                          data?.trend === "down" ? "bg-rose-500/10 text-rose-400 border-rose-500/20 shadow-[0_0_30px_rgba(244,63,94,0.1)] hover:bg-rose-500/20" : 
+                          "bg-white/5 text-white/60 border-white/10 hover:bg-white/10"
+                        )}
+                      >
+                        <div className={clsx(
+                          "w-2 h-2 rounded-full animate-pulse",
+                          rateType === 'official' ? "bg-white/40" :
+                          data?.trend === "up" ? "bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" : 
+                          data?.trend === "down" ? "bg-rose-400 shadow-[0_0_10px_rgba(251,113,133,0.8)]" : 
+                          "bg-white/40"
+                        )} />
+                        <span className="tabular-nums tracking-tighter text-base">
+                          {rateType === 'official' ? '0.00%' : (
+                            <>
+                              {data?.trend === "up" ? '+' : data?.trend === "down" ? '-' : ''}
+                              {data?.trendPercentage?.toFixed(2)}%
+                            </>
+                          )}
+                        </span>
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent 
+                      side="bottom" 
+                      className="p-0 border-0 bg-transparent shadow-none w-auto animate-in fade-in slide-in-from-top-2 duration-300"
+                      sideOffset={10}
+                    >
+                      <div className="relative group overflow-hidden rounded-2xl bg-[#0F172A] border border-white/10 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl max-w-[280px]">
+                        {/* Inner Gradient Glow */}
+                        <div className={clsx(
+                          "absolute inset-0 opacity-10 pointer-events-none transition-opacity duration-500",
+                          data?.trend === "up" ? "bg-green-500" : data?.trend === "down" ? "bg-rose-500" : "bg-white"
+                        )} />
+                        
+                        <div className="relative z-10 space-y-3">
+                          <div className="flex items-center gap-3">
+                            <div className={clsx(
+                              "p-2 rounded-lg bg-white/5 border border-white/10 transition-colors duration-300",
+                              (rateType === 'official' || data?.trend === "stable") ? "text-white" : data?.trend === "up" ? "text-green-400" : "text-rose-400"
+                            )}>
+                              {rateType === 'official' || data?.trend === "stable" ? <RefreshCw className="w-4 h-4" /> : data?.trend === "up" ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
+                            </div>
+                            <h4 className="font-bold text-white tracking-tight">
+                              {lang === 'ar' ? 'تحليل الاتجاه' : 'Trend Analysis'}
+                            </h4>
+                          </div>
+                          
+                          <p className="text-sm text-white/70 leading-relaxed font-medium">
+                            {rateType === 'official'
+                              ? (lang === 'ar' ? 'السوق مستقر. لا يوجد تغيير في السعر الرسمي.' : 'The market is stable. There is no change in the official price.')
+                              : (lang === 'ar' 
+                                  ? `السوق يتجه نحو ${data?.trend === 'up' ? 'الارتفاع' : 'الانخفاض'}. تم حساب هذه النسبة بناءً على حركة السعر خلال آخر 3 أيام.`
+                                  : `The market is trending ${data?.trend === 'up' ? 'up' : 'down'}. This percentage is calculated based on price movement over the last 3 days.`
+                                )
+                            }
+                          </p>
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                
+                {/* Main Price Section */}
+                <div className="flex-1 flex flex-col justify-center">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-baseline gap-4">
+                      <h2 className="text-7xl md:text-9xl font-bold text-white/90 tracking-tighter tabular-nums leading-none text-glow">
+                        {data?.currentPrice.toLocaleString()}
+                      </h2>
+                      <span className="text-2xl md:text-3xl text-white/10 font-bold tracking-tight uppercase">IQD</span>
+                    </div>
+                    <p className="text-white/30 text-base font-medium tracking-wide">
+                      {lang === 'ar' ? 'دينار عراقي مقابل الدولار الأمريكي' : 'Iraqi Dinar per US Dollar'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Buy/Sell Grid */}
+          <div className="grid grid-cols-2 gap-6 h-full">
+            {isLoading ? (
+              <>
+                <div className="bg-white/5 rounded-3xl animate-pulse" />
+                <div className="bg-white/5 rounded-3xl animate-pulse" />
+              </>
+            ) : (
+              <>
+                <StatCard 
+                  title={t.buyPrice} 
+                  value={data?.buyPrice.toLocaleString() || "0"} 
+                  subtitle={rateType === 'official' ? '' : t.buySubtitle}
+                  className="h-full bg-slate-900/40 border-white/5 hover:bg-slate-900/60 transition-all duration-500 hover-elevate transform-gpu"
+                  icon={<DollarSign className="w-4 h-4" />}
+                />
+                <StatCard 
+                  title={t.sellPrice} 
+                  value={data?.sellPrice.toLocaleString() || "0"} 
+                  subtitle={rateType === 'official' ? '' : t.sellSubtitle}
+                  className="h-full bg-slate-900/40 border-white/5 hover:bg-slate-900/60 transition-all duration-500 hover-elevate transform-gpu"
+                  icon={<DollarSign className="w-4 h-4" />}
+                />
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Chart Section */}
+        <div className="bg-slate-900/40 rounded-3xl p-8 border border-white/5 mb-12 shadow-xl relative overflow-hidden group hover:border-white/10 transition-all duration-500 hover-elevate transform-gpu">
+          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+          <div className="flex justify-between items-center mb-8 relative z-10">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-white/5 border border-white/10">
+                <TrendingUp className="w-4 h-4 text-white/40" />
+              </div>
+              <h3 className="font-bold text-lg text-white/90">
+                {t.marketAnalysis}
+              </h3>
+            </div>
+          </div>
+          
+          {isLoading ? (
+            <div className="h-[350px] w-full bg-white/5 animate-pulse rounded-2xl" />
+          ) : (
+            <div className="relative z-10">
+              <PriceChart data={data?.history || []} />
+            </div>
+          )}
+        </div>
+
+        {/* Converter Section */}
+        <div className="relative">
+          <div className="absolute inset-0 bg-primary/5 rounded-[2.5rem] blur-3xl -z-10 opacity-50 pointer-events-none" />
+          {data && <CurrencyConverter rate={data.currentPrice} lang={lang} />}
+        </div>
+
+      </main>
+    </div>
+  );
+}

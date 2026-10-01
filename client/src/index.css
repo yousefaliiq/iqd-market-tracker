@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 222 47% 11%;     /* #0F172A Deep Navy */
+  --foreground: 0 0% 96%;        /* #F5F5F5 Off-white */
+  --card: 222 47% 14%;           /* Slightly lighter than background */
+  --card-foreground: 0 0% 96%;
+  --popover: 222 47% 11%;
+  --popover-foreground: 0 0% 96%;
+  --primary: 0 0% 96%;
+  --primary-foreground: 222 47% 11%;
+  --secondary: 215 25% 27%;      /* Desaturated slate */
+  --secondary-foreground: 215 16% 70%; /* Slate grey helper labels */
+  --muted: 215 25% 15%;
+  --muted-foreground: 215 16% 60%;
+  --accent: 215 25% 20%;
+  --accent-foreground: 0 0% 96%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 215 25% 15%;         /* Subtle 1px border */
+  --input: 215 25% 15%;
+  --ring: 215 25% 90%;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  input:focus, input:active, textarea:focus, textarea:active {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-white/20;
+    font-family: "IBM Plex Sans Arabic", "Inter", system-ui, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+    direction: rtl;
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .swiss-card {
+    @apply relative overflow-hidden bg-[#0E0E0E] border border-white/[0.05] shadow-none;
+    /* Mathematical perfection inner border */
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Custom Utilities for Glassmorphism & Gradients */
+@layer utilities {
+  .glass-card {
+    @apply bg-slate-800/50 backdrop-blur-xl border border-white/5 shadow-xl;
+  }
+  
+  .glass-input {
+    @apply bg-slate-900/50 border border-white/10 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all duration-300;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+}
+
+/* Recharts Customization */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(255, 255, 255, 0.05);
+}
+
+.recharts-tooltip-cursor {
+  stroke: rgba(255, 255, 255, 0.1);
+}
