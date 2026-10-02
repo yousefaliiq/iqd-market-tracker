@@ -90,15 +90,15 @@ export default function Compliance() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-slate-200 pb-12 font-tajawal selection:bg-primary/30" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-background text-foreground pb-12 font-tajawal selection:bg-primary/30" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
       {/* Sticky Header */}
-      <header className="sticky top-0 z-50 glass-card border-b border-white/5 bg-slate-900/80 backdrop-blur-md transform-gpu">
+      <header className="sticky top-0 z-50 glass-card border-b border-border/80 bg-card/90 backdrop-blur-md transform-gpu">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="relative z-[100] p-2 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 transition-all active:scale-95"
+                className="relative z-[100] p-2 rounded-lg bg-secondary/80 hover:bg-secondary text-foreground/80 transition-all active:scale-95"
               >
                 <div className="relative w-6 h-6">
                   <span className={clsx(
@@ -116,7 +116,7 @@ export default function Compliance() {
                 </div>
               </button>
               <Link href="/">
-                <button className="flex items-center gap-2 text-white/60 hover:text-white transition-colors">
+                <button className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                   <ArrowLeft className={lang === 'ar' ? "rotate-180 w-5 h-5" : "w-5 h-5"} />
                   <span className="font-bold">{t.back}</span>
                 </button>
@@ -136,14 +136,14 @@ export default function Compliance() {
       />
 
       <div className="max-w-4xl mx-auto px-4 pt-8">
-        <Card className="bg-slate-900/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-[2rem] overflow-hidden relative shadow-2xl">
+        <Card className="bg-card/90 backdrop-blur-xl border border-border p-8 md:p-12 rounded-[2rem] overflow-hidden relative shadow-2xl">
           <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
           
           <div className="text-center mb-12">
             <div className="inline-flex p-4 rounded-3xl bg-primary/10 border border-primary/20 text-primary mb-6 shadow-[0_0_30px_rgba(var(--primary),0.1)]">
               <Shield className="w-10 h-10" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight text-glow">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight text-glow">
               {t.header}
             </h2>
           </div>
@@ -152,15 +152,15 @@ export default function Compliance() {
             {sections.map((section, idx) => (
               <div key={idx} className="relative group/section animate-in fade-in slide-in-from-bottom-4 duration-500" style={{ animationDelay: `${idx * 100}ms` }}>
                 <div className="flex items-center gap-4 mb-5">
-                  <div className="p-2 rounded-xl bg-white/5 border border-white/10 text-primary/80">
+                  <div className="p-2 rounded-xl bg-secondary/70 border border-border text-primary/80">
                     <section.icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white tracking-wide">
+                  <h3 className="text-2xl font-bold text-foreground tracking-wide">
                     {section.title[lang]}
                   </h3>
                 </div>
                 <div className="space-y-4">
-                  <p className="text-slate-300 text-xl leading-[1.8] text-start font-medium">
+                  <p className="text-foreground/80 text-xl leading-[1.8] text-start font-medium">
                     {section.content[lang]}
                   </p>
                 </div>
@@ -168,10 +168,10 @@ export default function Compliance() {
             ))}
           </div>
 
-          <div className="mt-16 pt-8 border-t border-white/5 flex justify-center">
+          <div className="mt-16 pt-8 border-t border-border/80 flex justify-center">
             <Button 
               onClick={() => setLocation('/')}
-              className="min-h-14 px-12 rounded-2xl bg-primary text-slate-900 text-lg font-bold hover:scale-105 active:scale-95 transition-all shadow-xl shadow-primary/20"
+              className="min-h-14 px-12 rounded-2xl bg-primary text-primary-foreground text-lg font-bold hover:scale-105 active:scale-95 transition-all shadow-xl shadow-primary/20"
             >
               <CheckCircle className="w-6 h-6 mr-2" />
               {t.acknowledge}
