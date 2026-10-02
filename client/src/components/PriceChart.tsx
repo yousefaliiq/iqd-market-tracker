@@ -20,7 +20,7 @@ interface PriceChartProps {
 
 type TimeFrame = "1D" | "1M" | "6M" | "1Y";
 
-export function PriceChart({ data, sparkline = false, color = "#3b82f6" }: PriceChartProps) {
+export function PriceChart({ data, sparkline = false, color = "hsl(var(--primary))" }: PriceChartProps) {
   const [timeFrame, setTimeFrame] = useState<TimeFrame>("1D");
 
   const chartData = useMemo(() => {
@@ -114,8 +114,8 @@ export function PriceChart({ data, sparkline = false, color = "#3b82f6" }: Price
             className={clsx(
               "px-4 py-1.5 rounded-lg text-sm font-bold transition-all",
               timeFrame === tf
-                ? "bg-primary text-slate-900 shadow-lg shadow-primary/20"
-                : "bg-slate-800 text-slate-400 hover:text-slate-200"
+                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                : "bg-secondary text-muted-foreground hover:text-foreground"
             )}
           >
             {tf}
@@ -128,20 +128,20 @@ export function PriceChart({ data, sparkline = false, color = "#3b82f6" }: Price
           <AreaChart data={chartData}>
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid
               strokeDasharray="3 3"
               vertical={false}
-              stroke="rgba(255,255,255,0.05)"
+              stroke="hsl(var(--border) / 0.75)"
             />
             <XAxis
               dataKey="label"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 10 }}
+              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
               minTickGap={30}
               dy={10}
             />
@@ -154,13 +154,13 @@ export function PriceChart({ data, sparkline = false, color = "#3b82f6" }: Price
                 if (active && payload && payload.length) {
                   const item = payload[0].payload;
                   return (
-                    <div className="bg-slate-900/90 p-3 rounded-xl border border-white/10 shadow-2xl backdrop-blur-md">
-                      <p className="text-white/40 text-[10px] uppercase tracking-wider mb-1">
+                    <div className="bg-card/95 p-3 rounded-xl border border-border shadow-2xl backdrop-blur-md">
+                      <p className="text-muted-foreground text-[10px] uppercase tracking-wider mb-1">
                         {format(item.parsedDate, "PPP")}
                       </p>
-                      {item.time && <p className="text-white/40 text-[10px] mb-1">{item.time}</p>}
-                      <p className="text-white font-bold text-lg">
-                        {item.price.toLocaleString()} <span className="text-xs text-white/20 uppercase ml-1">IQD</span>
+                      {item.time && <p className="text-muted-foreground text-[10px] mb-1">{item.time}</p>}
+                      <p className="text-foreground font-bold text-lg">
+                        {item.price.toLocaleString()} <span className="text-xs text-muted-foreground uppercase ml-1">IQD</span>
                       </p>
                     </div>
                   );
@@ -171,11 +171,13 @@ export function PriceChart({ data, sparkline = false, color = "#3b82f6" }: Price
             <Area
               type="monotone"
               dataKey="price"
-              stroke="#3b82f6"
+              stroke="hsl(var(--primary))"
               strokeWidth={2}
               fillOpacity={1}
               fill="url(#colorPrice)"
-              animationDuration={1000}
+              animationDuration={850}
+              animationEasing="ease-in-out"
+              animationBegin={0}
               isAnimationActive={true}
             />
           </AreaChart>
