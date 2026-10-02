@@ -49,18 +49,14 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[hsl(var(--background))] pb-20 relative overflow-x-hidden">
-      {/* Decorative Background Elements */}
-      <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-
       {/* Header */}
-      <header className="sticky top-0 z-50 glass-card border-b border-border/80 bg-card/90 backdrop-blur-md transform-gpu">
+      <header className="sticky top-0 z-50 border-b border-border/80 bg-card/95 backdrop-blur-md transform-gpu">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="relative z-[100] p-2 rounded-lg bg-secondary/80 hover:bg-secondary text-foreground/80 transition-all active:scale-95 hover-elevate active-elevate-2 overflow-visible"
+                className="relative z-[100] p-2 rounded-lg bg-secondary/70 hover:bg-secondary text-foreground/80 transition-all active:scale-95 hover-elevate active-elevate-2 overflow-visible"
               >
                 <div className="relative w-6 h-6">
                   <span className={clsx(
@@ -78,7 +74,7 @@ export default function Home() {
                 </div>
               </button>
 
-              <h1 className="text-xl md:text-2xl font-bold text-foreground tracking-tight text-glow">
+              <h1 className="text-xl md:text-2xl font-bold text-foreground tracking-tight">
                 {t.title}
                 {rateType === 'official' && (
                   <span className="ml-2 text-sm font-normal text-muted-foreground">({lang === 'ar' ? 'سعر البنك' : 'Official Rate'})</span>
@@ -106,10 +102,7 @@ export default function Home() {
         {/* Main Price Display */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Professional Exchange Rate Card */}
-          <div className="lg:col-span-2 relative overflow-hidden rounded-3xl bg-card/75 border border-border/80 p-8 md:p-12 flex flex-col min-h-[300px] group hover:border-border transition-all duration-500 shadow-2xl hover-elevate transform-gpu">
-            {/* Background Decorative Gradient */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none group-hover:bg-primary/10 transition-colors duration-700 will-change-[background-color]" />
-            
+          <div className="lg:col-span-2 relative overflow-hidden rounded-3xl bg-card border border-border p-8 md:p-12 flex flex-col min-h-[300px] group transition-colors duration-300 shadow-[0_10px_34px_rgb(var(--theme-shadow)/0.06)] transform-gpu">
             {isLoading ? (
               <div className="flex flex-col gap-8 h-full justify-center">
                 <div className="h-4 w-32 bg-secondary/70 rounded-full animate-pulse" />
@@ -136,17 +129,17 @@ export default function Home() {
                         className={clsx(
                           "flex items-center gap-2 font-bold text-sm px-5 py-2 rounded-full border transition-all duration-500 cursor-pointer hover:scale-105 active:scale-95 transform-gpu",
                           rateType === 'official' ? "bg-secondary/70 text-muted-foreground border-border hover:bg-secondary" :
-                          data?.trend === "up" ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:bg-emerald-500/20" : 
-                          data?.trend === "down" ? "bg-rose-500/10 text-rose-400 border-rose-500/20 shadow-[0_0_30px_rgba(244,63,94,0.1)] hover:bg-rose-500/20" : 
+                          data?.trend === "up" ? "bg-emerald-700/10 text-emerald-700 dark:text-emerald-300 border-emerald-700/15 hover:bg-emerald-700/15" : 
+                          data?.trend === "down" ? "bg-rose-700/10 text-rose-700 dark:text-rose-300 border-rose-700/15 hover:bg-rose-700/15" : 
                           "bg-secondary/70 text-muted-foreground border-border hover:bg-secondary"
                         )}
                       >
                         <div className={clsx(
                           "w-2 h-2 rounded-full animate-pulse",
-                          rateType === 'official' ? "bg-white/40" :
-                          data?.trend === "up" ? "bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" : 
-                          data?.trend === "down" ? "bg-rose-400 shadow-[0_0_10px_rgba(251,113,133,0.8)]" : 
-                          "bg-white/40"
+                          rateType === 'official' ? "bg-muted-foreground/40" :
+                          data?.trend === "up" ? "bg-emerald-700 dark:bg-emerald-300" : 
+                          data?.trend === "down" ? "bg-rose-700 dark:bg-rose-300" : 
+                          "bg-muted-foreground/40"
                         )} />
                         <span className="tabular-nums tracking-tighter text-base">
                           {rateType === 'official' ? '0.00%' : (
@@ -163,7 +156,7 @@ export default function Home() {
                       className="p-0 border-0 bg-transparent shadow-none w-auto animate-in fade-in slide-in-from-top-2 duration-300"
                       sideOffset={10}
                     >
-                      <div className="relative group overflow-hidden rounded-2xl bg-background border border-border p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl max-w-[280px]">
+                      <div className="relative group overflow-hidden rounded-2xl bg-card border border-border p-5 shadow-[0_16px_40px_rgb(var(--theme-shadow)/0.12)] max-w-[280px]">
                         {/* Inner Gradient Glow */}
                         <div className={clsx(
                           "absolute inset-0 opacity-10 pointer-events-none transition-opacity duration-500",
@@ -174,7 +167,7 @@ export default function Home() {
                           <div className="flex items-center gap-3">
                             <div className={clsx(
                               "p-2 rounded-lg bg-secondary/70 border border-border transition-colors duration-300",
-                              (rateType === 'official' || data?.trend === "stable") ? "text-foreground" : data?.trend === "up" ? "text-green-400" : "text-rose-400"
+                              (rateType === 'official' || data?.trend === "stable") ? "text-foreground" : data?.trend === "up" ? "text-emerald-700 dark:text-emerald-300" : "text-rose-700 dark:text-rose-300"
                             )}>
                               {rateType === 'official' || data?.trend === "stable" ? <RefreshCw className="w-4 h-4" /> : data?.trend === "up" ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
                             </div>
@@ -202,7 +195,7 @@ export default function Home() {
                 <div className="flex-1 flex flex-col justify-center">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-baseline gap-4">
-                      <h2 className="text-7xl md:text-9xl font-bold text-foreground tracking-tighter tabular-nums leading-none text-glow">
+                      <h2 className="text-7xl md:text-9xl font-bold text-foreground tracking-tighter tabular-nums leading-none">
                         {data?.currentPrice.toLocaleString()}
                       </h2>
                       <span className="text-2xl md:text-3xl text-muted-foreground/35 font-bold tracking-tight uppercase">IQD</span>
@@ -229,14 +222,14 @@ export default function Home() {
                   title={t.buyPrice} 
                   value={data?.buyPrice.toLocaleString() || "0"} 
                   subtitle={rateType === 'official' ? '' : t.buySubtitle}
-                  className="h-full bg-card/75 border-border/80 hover:bg-card/90 transition-all duration-500 hover-elevate transform-gpu"
+                  className="h-full bg-card border-border transition-colors duration-300 transform-gpu"
                   icon={<DollarSign className="w-4 h-4" />}
                 />
                 <StatCard 
                   title={t.sellPrice} 
                   value={data?.sellPrice.toLocaleString() || "0"} 
                   subtitle={rateType === 'official' ? '' : t.sellSubtitle}
-                  className="h-full bg-card/75 border-border/80 hover:bg-card/90 transition-all duration-500 hover-elevate transform-gpu"
+                  className="h-full bg-card border-border transition-colors duration-300 transform-gpu"
                   icon={<DollarSign className="w-4 h-4" />}
                 />
               </>
@@ -245,8 +238,7 @@ export default function Home() {
         </div>
 
         {/* Chart Section */}
-        <div className="bg-card/75 rounded-3xl p-8 border border-border/80 mb-12 shadow-xl relative overflow-hidden group hover:border-border transition-all duration-500 hover-elevate transform-gpu">
-          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+        <div className="bg-card rounded-3xl p-8 border border-border mb-12 shadow-[0_8px_28px_rgb(var(--theme-shadow)/0.055)] relative overflow-hidden transform-gpu">
           <div className="flex justify-between items-center mb-8 relative z-10">
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-xl bg-secondary/70 border border-border">
@@ -269,7 +261,6 @@ export default function Home() {
 
         {/* Converter Section */}
         <div className="relative">
-          <div className="absolute inset-0 bg-primary/5 rounded-[2.5rem] blur-3xl -z-10 opacity-50 pointer-events-none" />
           {data && <CurrencyConverter rate={data.currentPrice} lang={lang} />}
         </div>
 
