@@ -31,15 +31,15 @@ export default function Home() {
 
   if (isError) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
         <div className="bg-red-500/10 p-4 rounded-full mb-4">
           <Info className="w-12 h-12 text-red-400" />
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">{t.errorLoading}</h2>
-        <p className="text-slate-400 mb-6">{t.errorSub}</p>
+        <h2 className="text-2xl font-bold text-foreground mb-2">{t.errorLoading}</h2>
+        <p className="text-muted-foreground mb-6">{t.errorSub}</p>
         <button 
           onClick={() => refetch()}
-          className="px-6 py-3 rounded-xl bg-primary hover:bg-primary/90 text-slate-900 font-bold transition-colors"
+          className="px-6 py-3 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-bold transition-colors"
         >
           {t.retry}
         </button>
@@ -51,16 +51,16 @@ export default function Home() {
     <div className="min-h-screen bg-[hsl(var(--background))] pb-20 relative overflow-x-hidden">
       {/* Decorative Background Elements */}
       <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+      <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
       {/* Header */}
-      <header className="sticky top-0 z-50 glass-card border-b border-white/5 bg-slate-900/80 backdrop-blur-md transform-gpu">
+      <header className="sticky top-0 z-50 glass-card border-b border-border/80 bg-card/90 backdrop-blur-md transform-gpu">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="relative z-[100] p-2 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 transition-all active:scale-95 hover-elevate active-elevate-2 overflow-visible"
+                className="relative z-[100] p-2 rounded-lg bg-secondary/80 hover:bg-secondary text-foreground/80 transition-all active:scale-95 hover-elevate active-elevate-2 overflow-visible"
               >
                 <div className="relative w-6 h-6">
                   <span className={clsx(
@@ -78,10 +78,10 @@ export default function Home() {
                 </div>
               </button>
 
-              <h1 className="text-xl md:text-2xl font-bold text-white tracking-tight text-glow">
+              <h1 className="text-xl md:text-2xl font-bold text-foreground tracking-tight text-glow">
                 {t.title}
                 {rateType === 'official' && (
-                  <span className="ml-2 text-sm font-normal text-white/40">({lang === 'ar' ? 'سعر البنك' : 'Official Rate'})</span>
+                  <span className="ml-2 text-sm font-normal text-muted-foreground">({lang === 'ar' ? 'سعر البنك' : 'Official Rate'})</span>
                 )}
               </h1>
             </div>
@@ -106,24 +106,24 @@ export default function Home() {
         {/* Main Price Display */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Professional Exchange Rate Card */}
-          <div className="lg:col-span-2 relative overflow-hidden rounded-3xl bg-slate-900/40 border border-white/5 p-8 md:p-12 flex flex-col min-h-[300px] group hover:border-white/10 transition-all duration-500 shadow-2xl hover-elevate transform-gpu">
+          <div className="lg:col-span-2 relative overflow-hidden rounded-3xl bg-card/75 border border-border/80 p-8 md:p-12 flex flex-col min-h-[300px] group hover:border-border transition-all duration-500 shadow-2xl hover-elevate transform-gpu">
             {/* Background Decorative Gradient */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none group-hover:bg-primary/10 transition-colors duration-700 will-change-[background-color]" />
             
             {isLoading ? (
               <div className="flex flex-col gap-8 h-full justify-center">
-                <div className="h-4 w-32 bg-white/5 rounded-full animate-pulse" />
-                <div className="h-16 w-64 bg-white/5 rounded-lg animate-pulse" />
+                <div className="h-4 w-32 bg-secondary/70 rounded-full animate-pulse" />
+                <div className="h-16 w-64 bg-secondary/70 rounded-lg animate-pulse" />
               </div>
             ) : (
               <div className="flex flex-col h-full relative z-10">
                 {/* Top Row: Label and Trend */}
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-white/5 border border-white/10">
-                      <DollarSign className="w-4 h-4 text-white/30" />
+                    <div className="p-2 rounded-lg bg-secondary/70 border border-border">
+                      <DollarSign className="w-4 h-4 text-muted-foreground/80" />
                     </div>
-                    <span className="text-white/30 font-semibold text-xs uppercase tracking-widest">
+                    <span className="text-muted-foreground/80 font-semibold text-xs uppercase tracking-widest">
                       {lang === 'ar' ? 'سعر الصرف المباشر' : 'Live Exchange Rate'}
                     </span>
                   </div>
@@ -135,10 +135,10 @@ export default function Home() {
                         type="button"
                         className={clsx(
                           "flex items-center gap-2 font-bold text-sm px-5 py-2 rounded-full border transition-all duration-500 cursor-pointer hover:scale-105 active:scale-95 transform-gpu",
-                          rateType === 'official' ? "bg-white/5 text-white/60 border-white/10 hover:bg-white/10" :
+                          rateType === 'official' ? "bg-secondary/70 text-muted-foreground border-border hover:bg-secondary" :
                           data?.trend === "up" ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:bg-emerald-500/20" : 
                           data?.trend === "down" ? "bg-rose-500/10 text-rose-400 border-rose-500/20 shadow-[0_0_30px_rgba(244,63,94,0.1)] hover:bg-rose-500/20" : 
-                          "bg-white/5 text-white/60 border-white/10 hover:bg-white/10"
+                          "bg-secondary/70 text-muted-foreground border-border hover:bg-secondary"
                         )}
                       >
                         <div className={clsx(
@@ -163,7 +163,7 @@ export default function Home() {
                       className="p-0 border-0 bg-transparent shadow-none w-auto animate-in fade-in slide-in-from-top-2 duration-300"
                       sideOffset={10}
                     >
-                      <div className="relative group overflow-hidden rounded-2xl bg-[#0F172A] border border-white/10 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl max-w-[280px]">
+                      <div className="relative group overflow-hidden rounded-2xl bg-background border border-border p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl max-w-[280px]">
                         {/* Inner Gradient Glow */}
                         <div className={clsx(
                           "absolute inset-0 opacity-10 pointer-events-none transition-opacity duration-500",
@@ -173,17 +173,17 @@ export default function Home() {
                         <div className="relative z-10 space-y-3">
                           <div className="flex items-center gap-3">
                             <div className={clsx(
-                              "p-2 rounded-lg bg-white/5 border border-white/10 transition-colors duration-300",
-                              (rateType === 'official' || data?.trend === "stable") ? "text-white" : data?.trend === "up" ? "text-green-400" : "text-rose-400"
+                              "p-2 rounded-lg bg-secondary/70 border border-border transition-colors duration-300",
+                              (rateType === 'official' || data?.trend === "stable") ? "text-foreground" : data?.trend === "up" ? "text-green-400" : "text-rose-400"
                             )}>
                               {rateType === 'official' || data?.trend === "stable" ? <RefreshCw className="w-4 h-4" /> : data?.trend === "up" ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
                             </div>
-                            <h4 className="font-bold text-white tracking-tight">
+                            <h4 className="font-bold text-foreground tracking-tight">
                               {lang === 'ar' ? 'تحليل الاتجاه' : 'Trend Analysis'}
                             </h4>
                           </div>
                           
-                          <p className="text-sm text-white/70 leading-relaxed font-medium">
+                          <p className="text-sm text-foreground/70 leading-relaxed font-medium">
                             {rateType === 'official'
                               ? (lang === 'ar' ? 'السوق مستقر. لا يوجد تغيير في السعر الرسمي.' : 'The market is stable. There is no change in the official price.')
                               : (lang === 'ar' 
@@ -202,12 +202,12 @@ export default function Home() {
                 <div className="flex-1 flex flex-col justify-center">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-baseline gap-4">
-                      <h2 className="text-7xl md:text-9xl font-bold text-white/90 tracking-tighter tabular-nums leading-none text-glow">
+                      <h2 className="text-7xl md:text-9xl font-bold text-foreground tracking-tighter tabular-nums leading-none text-glow">
                         {data?.currentPrice.toLocaleString()}
                       </h2>
-                      <span className="text-2xl md:text-3xl text-white/10 font-bold tracking-tight uppercase">IQD</span>
+                      <span className="text-2xl md:text-3xl text-muted-foreground/35 font-bold tracking-tight uppercase">IQD</span>
                     </div>
-                    <p className="text-white/30 text-base font-medium tracking-wide">
+                    <p className="text-muted-foreground/80 text-base font-medium tracking-wide">
                       {lang === 'ar' ? 'دينار عراقي مقابل الدولار الأمريكي' : 'Iraqi Dinar per US Dollar'}
                     </p>
                   </div>
@@ -220,8 +220,8 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-6 h-full">
             {isLoading ? (
               <>
-                <div className="bg-white/5 rounded-3xl animate-pulse" />
-                <div className="bg-white/5 rounded-3xl animate-pulse" />
+                <div className="bg-secondary/70 rounded-3xl animate-pulse" />
+                <div className="bg-secondary/70 rounded-3xl animate-pulse" />
               </>
             ) : (
               <>
@@ -229,14 +229,14 @@ export default function Home() {
                   title={t.buyPrice} 
                   value={data?.buyPrice.toLocaleString() || "0"} 
                   subtitle={rateType === 'official' ? '' : t.buySubtitle}
-                  className="h-full bg-slate-900/40 border-white/5 hover:bg-slate-900/60 transition-all duration-500 hover-elevate transform-gpu"
+                  className="h-full bg-card/75 border-border/80 hover:bg-card/90 transition-all duration-500 hover-elevate transform-gpu"
                   icon={<DollarSign className="w-4 h-4" />}
                 />
                 <StatCard 
                   title={t.sellPrice} 
                   value={data?.sellPrice.toLocaleString() || "0"} 
                   subtitle={rateType === 'official' ? '' : t.sellSubtitle}
-                  className="h-full bg-slate-900/40 border-white/5 hover:bg-slate-900/60 transition-all duration-500 hover-elevate transform-gpu"
+                  className="h-full bg-card/75 border-border/80 hover:bg-card/90 transition-all duration-500 hover-elevate transform-gpu"
                   icon={<DollarSign className="w-4 h-4" />}
                 />
               </>
@@ -245,21 +245,21 @@ export default function Home() {
         </div>
 
         {/* Chart Section */}
-        <div className="bg-slate-900/40 rounded-3xl p-8 border border-white/5 mb-12 shadow-xl relative overflow-hidden group hover:border-white/10 transition-all duration-500 hover-elevate transform-gpu">
+        <div className="bg-card/75 rounded-3xl p-8 border border-border/80 mb-12 shadow-xl relative overflow-hidden group hover:border-border transition-all duration-500 hover-elevate transform-gpu">
           <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent" />
           <div className="flex justify-between items-center mb-8 relative z-10">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-white/5 border border-white/10">
-                <TrendingUp className="w-4 h-4 text-white/40" />
+              <div className="p-2 rounded-xl bg-secondary/70 border border-border">
+                <TrendingUp className="w-4 h-4 text-muted-foreground" />
               </div>
-              <h3 className="font-bold text-lg text-white/90">
+              <h3 className="font-bold text-lg text-foreground">
                 {t.marketAnalysis}
               </h3>
             </div>
           </div>
           
           {isLoading ? (
-            <div className="h-[350px] w-full bg-white/5 animate-pulse rounded-2xl" />
+            <div className="h-[350px] w-full bg-secondary/70 animate-pulse rounded-2xl" />
           ) : (
             <div className="relative z-10">
               <PriceChart data={data?.history || []} />
