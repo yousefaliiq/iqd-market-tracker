@@ -114,7 +114,7 @@ export function PriceChart({ data, sparkline = false, color = "hsl(var(--primary
             className={clsx(
               "px-4 py-1.5 rounded-lg text-sm font-bold transition-all",
               timeFrame === tf
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                ? "bg-primary text-primary-foreground"
                 : "bg-secondary text-muted-foreground hover:text-foreground"
             )}
           >
@@ -128,7 +128,7 @@ export function PriceChart({ data, sparkline = false, color = "hsl(var(--primary
           <AreaChart data={chartData}>
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.16} />
                 <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
               </linearGradient>
             </defs>
@@ -154,7 +154,7 @@ export function PriceChart({ data, sparkline = false, color = "hsl(var(--primary
                 if (active && payload && payload.length) {
                   const item = payload[0].payload;
                   return (
-                    <div className="bg-card/95 p-3 rounded-xl border border-border shadow-2xl backdrop-blur-md">
+                    <div className="bg-card p-3 rounded-xl border border-border shadow-[0_10px_30px_rgb(var(--theme-shadow)/0.1)]">
                       <p className="text-muted-foreground text-[10px] uppercase tracking-wider mb-1">
                         {format(item.parsedDate, "PPP")}
                       </p>
