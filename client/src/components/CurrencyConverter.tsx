@@ -120,9 +120,7 @@ export function CurrencyConverter({ rate, lang }: CurrencyConverterProps) {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <div className="bg-card/75 rounded-[2.5rem] p-6 md:p-8 border border-border/80 shadow-[0_8px_32px_rgba(0,0,0,0.3)] backdrop-blur-[12px] relative overflow-hidden group">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-        
+      <div className="bg-card rounded-[2.5rem] p-6 md:p-8 border border-border shadow-[0_8px_28px_rgb(var(--theme-shadow)/0.055)] relative overflow-hidden group">
         <div className="flex items-center gap-3 mb-8 relative z-10">
           <div className="p-2.5 rounded-xl bg-secondary/70 border border-border shadow-inner">
             <Calculator className="w-5 h-5 text-muted-foreground" />
@@ -130,7 +128,7 @@ export function CurrencyConverter({ rate, lang }: CurrencyConverterProps) {
           <h3 className="font-bold text-xl text-foreground tracking-tight">{t.currencyConverter}</h3>
         </div>
 
-        <div className="relative z-10 grid grid-cols-1 bg-secondary/35 border border-border/80 rounded-3xl overflow-hidden">
+        <div className="relative z-10 grid grid-cols-1 bg-secondary/45 border border-border rounded-3xl overflow-hidden">
           {isSwapped ? iqdRow : usdRow}
 
           {/* Divider & Swap Icon */}
@@ -138,7 +136,7 @@ export function CurrencyConverter({ rate, lang }: CurrencyConverterProps) {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
               <button 
                 onClick={handleSwap}
-                className="p-2 rounded-full bg-background border border-border shadow-xl hover:bg-secondary transition-all active:scale-90"
+                className="p-2 rounded-full bg-card border border-border shadow-[0_4px_14px_rgb(var(--theme-shadow)/0.08)] hover:bg-secondary transition-all active:scale-90"
               >
                 <ArrowUpDown className={clsx("w-4 h-4 text-muted-foreground transition-transform duration-300", isSwapped && "rotate-180")} />
               </button>
