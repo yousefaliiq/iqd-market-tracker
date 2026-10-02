@@ -67,7 +67,7 @@ export function MobileNavOverlay({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-[#0f172a]/60 backdrop-blur-[15px] transform-gpu"
+            className="absolute inset-0 bg-background/60 backdrop-blur-[15px] transform-gpu"
           />
 
           {/* Menu Content */}
@@ -81,7 +81,7 @@ export function MobileNavOverlay({
             <div className="flex justify-end mb-8 pointer-events-auto">
               <button
                 onClick={onClose}
-                className="p-3 rounded-full bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all active:scale-90"
+                className="p-3 rounded-full bg-secondary/70 border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-all active:scale-90"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -102,7 +102,7 @@ export function MobileNavOverlay({
                         className={`flex items-center gap-4 p-4 rounded-2xl border transition-all active:scale-95 group ${
                           location === item.href 
                             ? "bg-primary/20 border-primary/30" 
-                            : "bg-white/5 border-white/10 hover:bg-white/10"
+                            : "bg-secondary/70 border-border hover:bg-secondary"
                         }`}
                       >
                         <div className={`p-3 rounded-xl transition-transform group-hover:scale-110 ${
@@ -110,7 +110,7 @@ export function MobileNavOverlay({
                         }`}>
                           <item.icon className="w-5 h-5" />
                         </div>
-                        <span className={`text-lg font-bold ${location === item.href ? "text-primary" : "text-white"}`}>
+                        <span className={`text-lg font-bold ${location === item.href ? "text-primary" : "text-foreground"}`}>
                           {item.label}
                         </span>
                       </a>
@@ -118,12 +118,12 @@ export function MobileNavOverlay({
                   ) : (
                     <button
                       onClick={item.onClick}
-                      className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all active:scale-95 group text-start"
+                      className="w-full flex items-center gap-4 p-4 rounded-2xl bg-secondary/70 border border-border hover:bg-secondary transition-all active:scale-95 group text-start"
                     >
                       <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
                         <item.icon className="w-5 h-5" />
                       </div>
-                      <span className="text-lg font-bold text-white">
+                      <span className="text-lg font-bold text-foreground">
                         {item.label}
                       </span>
                     </button>
