@@ -8,7 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { format, subDays, subMonths, isAfter } from "date-fns";
+import { format, subDays, subMonths, subYears, isAfter } from "date-fns";
 import { DinarDataPoint } from "@shared/schema";
 import { clsx } from "clsx";
 
@@ -18,7 +18,7 @@ interface PriceChartProps {
   color?: string;
 }
 
-type TimeFrame = "1D" | "1M" | "6M";
+type TimeFrame = "1D" | "1M" | "6M" | "1Y";
 
 export function PriceChart({ data, sparkline = false, color = "#3b82f6" }: PriceChartProps) {
   const [timeFrame, setTimeFrame] = useState<TimeFrame>("1D");
@@ -62,9 +62,16 @@ export function PriceChart({ data, sparkline = false, color = "#3b82f6" }: Price
       return fallbackData.map(d => ({ ...d, label: d.time }));
     }
 
-    const now = new Date();
-    const startDate = timeFrame === "1M" ? subDays(now, 30) : subMonths(now, 6);
-    const rangeData = dataWithParsedDates.filter(d => isAfter(d.parsedDate, startDate));
+    const latestDate = dataWithParsedDates[dataWithParsedDates.length - 1].parsedDate;
+    const startDate =
+      timeFrame === "1M"
+        ? subDays(latestDate, 30)
+        : timeFrame === "6M"
+          ? subMonths(latestDate, 6)
+          : subYears(latestDate, 1);
+    const rangeData = dataWithParsedDates.filter(
+      d => isAfter(d.parsedDate, startDate) || d.parsedDate.getTime() === startDate.getTime()
+    );
     const dailyMap = new Map<string, any>();
     rangeData.forEach(d => dailyMap.set(d.date, d));
     return Array.from(dailyMap.values()).map(d => ({
@@ -100,7 +107,7 @@ export function PriceChart({ data, sparkline = false, color = "#3b82f6" }: Price
   return (
     <div className="space-y-6">
       <div className="flex gap-2 justify-center">
-        {(["1D", "1M", "6M"] as TimeFrame[]).map((tf) => (
+        {(["1D", "1M", "6M", "1Y"] as TimeFrame[]).map((tf) => (
           <button
             key={tf}
             onClick={() => setTimeFrame(tf)}
