@@ -161,15 +161,15 @@ export default function ExchangeGuide() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-slate-200 pb-12 font-tajawal" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-background text-foreground pb-12 font-tajawal" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
       {/* Sticky Header */}
-      <header className="sticky top-0 z-50 glass-card border-b border-white/5 bg-slate-900/80 backdrop-blur-md transform-gpu">
+      <header className="sticky top-0 z-50 glass-card border-b border-border/80 bg-card/90 backdrop-blur-md transform-gpu">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="relative z-[100] p-2 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 transition-all active:scale-95"
+                className="relative z-[100] p-2 rounded-lg bg-secondary/80 hover:bg-secondary text-foreground/80 transition-all active:scale-95"
               >
                 <div className="relative w-6 h-6">
                   <span className={clsx(
@@ -187,7 +187,7 @@ export default function ExchangeGuide() {
                 </div>
               </button>
               <Link href="/">
-                <button className="flex items-center gap-2 text-white/60 hover:text-white transition-colors">
+                <button className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                   <ArrowLeft className={lang === 'ar' ? "rotate-180 w-5 h-5" : "w-5 h-5"} />
                   <span className="font-bold">{t.back}</span>
                 </button>
@@ -207,21 +207,21 @@ export default function ExchangeGuide() {
       />
 
       <div className="max-w-4xl mx-auto px-4 pt-8">
-        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent mb-8">
+        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent mb-8">
           {t.title}
         </h1>
 
         <Tabs defaultValue="tourists" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 bg-slate-900/50 p-1 rounded-2xl border border-white/5 mb-8">
+          <TabsList className="grid w-full grid-cols-2 bg-card/80 p-1 rounded-2xl border border-border/80 mb-8">
             <TabsTrigger 
               value="tourists" 
-              className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-slate-900 font-bold transition-all duration-300"
+              className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-bold transition-all duration-300"
             >
               {t.tourists}
             </TabsTrigger>
             <TabsTrigger 
               value="general"
-              className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-slate-900 font-bold transition-all duration-300"
+              className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-bold transition-all duration-300"
             >
               {t.general}
             </TabsTrigger>
@@ -229,14 +229,14 @@ export default function ExchangeGuide() {
 
           <TabsContent value="tourists" className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {touristsTips.map((tip, idx) => (
-              <Card key={idx} className="bg-slate-900/40 backdrop-blur-md border border-white/10 p-6 rounded-2xl hover:border-primary/20 transition-colors duration-300">
+              <Card key={idx} className="bg-card/75 backdrop-blur-md border border-border p-6 rounded-2xl hover:border-primary/20 transition-colors duration-300">
                 <div className="flex items-start gap-4">
                   <div className={`p-3 rounded-xl bg-primary/10 border border-primary/20 ${tip.iconColor || 'text-primary'}`}>
                     <tip.icon className="w-6 h-6" />
                   </div>
                   <div className="space-y-2 flex-1">
-                    <h3 className="text-xl font-bold text-white text-start">{tip.title[lang]}</h3>
-                    <p className="text-slate-400 leading-relaxed text-start text-base" style={{ lineHeight: '1.6' }}>{tip.body[lang]}</p>
+                    <h3 className="text-xl font-bold text-foreground text-start">{tip.title[lang]}</h3>
+                    <p className="text-muted-foreground leading-relaxed text-start text-base" style={{ lineHeight: '1.6' }}>{tip.body[lang]}</p>
                   </div>
                 </div>
               </Card>
@@ -245,14 +245,14 @@ export default function ExchangeGuide() {
 
           <TabsContent value="general" className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {generalInfo.map((info, idx) => (
-              <Card key={idx} className="bg-slate-900/40 backdrop-blur-md border border-white/10 p-6 rounded-2xl hover:border-primary/20 transition-colors duration-300">
+              <Card key={idx} className="bg-card/75 backdrop-blur-md border border-border p-6 rounded-2xl hover:border-primary/20 transition-colors duration-300">
                 <div className="flex items-start gap-4">
                   <div className="p-3 rounded-xl bg-primary/10 border border-primary/20 text-primary">
                     <info.icon className="w-6 h-6" />
                   </div>
                   <div className="space-y-2 flex-1">
-                    <h3 className="text-xl font-bold text-white text-start">{info.title[lang]}</h3>
-                    <p className="text-slate-400 leading-relaxed text-start text-base" style={{ lineHeight: '1.6' }}>{info.body[lang]}</p>
+                    <h3 className="text-xl font-bold text-foreground text-start">{info.title[lang]}</h3>
+                    <p className="text-muted-foreground leading-relaxed text-start text-base" style={{ lineHeight: '1.6' }}>{info.body[lang]}</p>
                   </div>
                 </div>
               </Card>
