@@ -13,12 +13,9 @@ interface StatCardProps {
 export function StatCard({ title, value, trend, subtitle, className, icon }: StatCardProps) {
   return (
     <div className={clsx(
-      "bg-card/75 rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group border border-border/80 hover:border-border transition-all duration-300",
+      "bg-card rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group border border-border transition-colors duration-300",
       className
     )}>
-      {/* Background Gradient Blob */}
-      <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-all duration-500" />
-
       <div className="flex justify-between items-start mb-4 relative z-10">
         <span className="text-muted-foreground/80 font-semibold text-xs uppercase tracking-widest">{title}</span>
         {icon && <div className="text-muted-foreground/60 bg-secondary/70 p-2 rounded-xl border border-border/80">{icon}</div>}
@@ -33,9 +30,9 @@ export function StatCard({ title, value, trend, subtitle, className, icon }: Sta
           {trend && (
             <div className={clsx(
               "flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-bold mb-1.5 border",
-              trend === "up" && "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-              trend === "down" && "bg-rose-500/10 text-rose-400 border-rose-500/20",
-              trend === "stable" && "bg-blue-500/10 text-blue-400 border-blue-500/20"
+              trend === "up" && "bg-emerald-700/10 text-emerald-700 dark:text-emerald-300 border-emerald-700/15",
+              trend === "down" && "bg-rose-700/10 text-rose-700 dark:text-rose-300 border-rose-700/15",
+              trend === "stable" && "bg-primary/10 text-primary border-primary/15"
             )}>
               {trend === "up" && <ArrowUp className="w-3 h-3" />}
               {trend === "down" && <ArrowDown className="w-3 h-3" />}
