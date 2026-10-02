@@ -5,26 +5,50 @@
 @tailwind utilities;
 
 :root {
-  --background: 222 47% 11%;     /* #0F172A Deep Navy */
-  --foreground: 0 0% 96%;        /* #F5F5F5 Off-white */
-  --card: 222 47% 14%;           /* Slightly lighter than background */
-  --card-foreground: 0 0% 96%;
-  --popover: 222 47% 11%;
-  --popover-foreground: 0 0% 96%;
-  --primary: 0 0% 96%;
-  --primary-foreground: 222 47% 11%;
-  --secondary: 215 25% 27%;      /* Desaturated slate */
-  --secondary-foreground: 215 16% 70%; /* Slate grey helper labels */
-  --muted: 215 25% 15%;
-  --muted-foreground: 215 16% 60%;
-  --accent: 215 25% 20%;
-  --accent-foreground: 0 0% 96%;
-  --destructive: 0 62.8% 30.6%;
+  --background: 214 33% 97%;        /* Seen It: #f4f7fb */
+  --foreground: 240 3% 12%;         /* Seen It: #1d1d1f */
+  --card: 0 0% 100%;                /* #ffffff */
+  --card-foreground: 240 3% 12%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 3% 12%;
+  --primary: 199 89% 48%;           /* #0ea5e9 */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 214 24% 95%;         /* #eef2f7 */
+  --secondary-foreground: 220 8% 47%;
+  --muted: 214 24% 95%;
+  --muted-foreground: 220 8% 47%;   /* #6e7381 */
+  --accent: 199 89% 48%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 100% 64%;
   --destructive-foreground: 0 0% 100%;
-  --border: 215 25% 15%;         /* Subtle 1px border */
-  --input: 215 25% 15%;
-  --ring: 215 25% 90%;
+  --border: 215 24% 91%;            /* #e3e8ef */
+  --input: 215 24% 91%;
+  --ring: 199 89% 48%;
   --radius: 0.75rem;
+  --theme-shadow: 29 41 61;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: 216 19% 7%;       /* #0f1216 */
+    --foreground: 220 23% 96%;      /* #f2f4f7 */
+    --card: 216 16% 11%;            /* #171b21 */
+    --card-foreground: 220 23% 96%;
+    --popover: 216 16% 11%;
+    --popover-foreground: 220 23% 96%;
+    --primary: 198 93% 60%;         /* #38bdf8 */
+    --primary-foreground: 197 76% 10%;
+    --secondary: 215 17% 15%;       /* #1f242c */
+    --secondary-foreground: 216 12% 68%;
+    --muted: 215 17% 15%;
+    --muted-foreground: 216 12% 68%;
+    --accent: 198 93% 60%;
+    --accent-foreground: 197 76% 10%;
+    --border: 215 14% 19%;          /* #2a3038 */
+    --input: 215 14% 19%;
+    --ring: 198 93% 60%;
+    --theme-shadow: 0 0 0;
+  }
 }
 
 @layer base {
@@ -32,18 +56,23 @@
     @apply border-border outline-ring/50;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
+
   input:focus, input:active, textarea:focus, textarea:active {
     outline: none !important;
     box-shadow: none !important;
   }
+
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    background: hsl(var(--background));
+    color-scheme: light dark;
   }
+
   body {
-    @apply bg-background text-foreground antialiased selection:bg-white/20;
+    @apply bg-background text-foreground antialiased selection:bg-primary/20;
     font-family: "IBM Plex Sans Arabic", "Inter", system-ui, sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
     direction: rtl;
@@ -53,33 +82,29 @@
 
 @layer utilities {
   .swiss-card {
-    @apply relative overflow-hidden bg-[#0E0E0E] border border-white/[0.05] shadow-none;
-    /* Mathematical perfection inner border */
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    @apply relative overflow-hidden bg-card border border-border shadow-none;
+    box-shadow: inset 0 0 0 1px hsl(var(--border) / .7);
   }
-}
 
-/* Custom Utilities for Glassmorphism & Gradients */
-@layer utilities {
   .glass-card {
-    @apply bg-slate-800/50 backdrop-blur-xl border border-white/5 shadow-xl;
+    @apply bg-card/80 backdrop-blur-xl border border-border;
+    box-shadow: 0 8px 28px rgb(var(--theme-shadow) / .08);
   }
   
   .glass-input {
-    @apply bg-slate-900/50 border border-white/10 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all duration-300;
+    @apply bg-card/70 border border-border focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all duration-300;
   }
 
   .text-glow {
-    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    text-shadow: 0 0 22px hsl(var(--primary) / .22);
   }
 }
 
-/* Recharts Customization */
 .recharts-cartesian-grid-horizontal line,
 .recharts-cartesian-grid-vertical line {
-  stroke: rgba(255, 255, 255, 0.05);
+  stroke: hsl(var(--border) / .7);
 }
 
 .recharts-tooltip-cursor {
-  stroke: rgba(255, 255, 255, 0.1);
+  stroke: hsl(var(--foreground) / .12);
 }
